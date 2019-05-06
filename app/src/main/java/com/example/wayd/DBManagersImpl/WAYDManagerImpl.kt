@@ -1,9 +1,9 @@
-package com.example.WAYD.DBManagersImpl
+package com.example.wayd.dbmanagersImpl
 
 import android.util.Log
-import com.example.WAYD.DBEntities.Activity
-import com.example.WAYD.DBEntities.Record
-import com.example.WAYD.DBManagers.WAYDManager
+import com.example.wayd.dbentities.Activity
+import com.example.wayd.dbentities.Record
+import com.example.wayd.dbmanagers.WAYDManager
 import io.realm.Realm
 import io.realm.RealmResults
 import java.sql.Time

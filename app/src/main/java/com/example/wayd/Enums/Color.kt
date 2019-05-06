@@ -1,4 +1,4 @@
-package com.example.WAYD.Enums
+package com.example.wayd.enums
 
 enum class Color{
     //Will be represented as codes prob

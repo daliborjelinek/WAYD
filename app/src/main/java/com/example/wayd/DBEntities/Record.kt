@@ -1,4 +1,4 @@
-package com.example.WAYD.DBEntities
+package com.example.wayd.dbentities
 
 import io.realm.RealmObject
 import java.sql.Time

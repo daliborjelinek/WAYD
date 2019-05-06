@@ -1,7 +1,7 @@
-package com.example.WAYD.DBManagers
+package com.example.wayd.dbmanagers
 
-import com.example.WAYD.DBEntities.Activity
-import com.example.WAYD.Enums.Type
+import com.example.wayd.dbentities.Activity
+import com.example.wayd.enums.Type
 import io.realm.Realm
 import io.realm.RealmResults
 

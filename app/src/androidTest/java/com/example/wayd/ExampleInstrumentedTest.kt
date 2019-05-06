@@ -1,4 +1,4 @@
-package com.example.WAYD
+package com.example.wayd
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

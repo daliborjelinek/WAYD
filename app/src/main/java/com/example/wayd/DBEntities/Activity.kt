@@ -1,7 +1,5 @@
-package com.example.WAYD.DBEntities
+package com.example.wayd.dbentities
 
-import com.example.WAYD.Enums.Color
-import com.example.WAYD.Enums.Type
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 

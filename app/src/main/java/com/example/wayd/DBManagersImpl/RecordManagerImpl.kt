@@ -1,8 +1,8 @@
-package com.example.WAYD.DBManagersImpl
+package com.example.wayd.dbmanagersImpl
 
 import android.util.Log
-import com.example.WAYD.DBEntities.Record
-import com.example.WAYD.DBManagers.RecordManager
+import com.example.wayd.dbentities.Record
+import com.example.wayd.dbmanagers.RecordManager
 import io.realm.Realm
 import io.realm.exceptions.RealmException
 import java.lang.Exception

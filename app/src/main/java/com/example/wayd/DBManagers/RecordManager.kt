@@ -1,6 +1,6 @@
-package com.example.WAYD.DBManagers
+package com.example.wayd.dbmanagers
 
-import com.example.WAYD.DBEntities.Record
+import com.example.wayd.dbentities.Record
 import io.realm.Realm
 
 import java.time.Duration

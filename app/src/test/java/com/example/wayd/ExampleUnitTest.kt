@@ -1,4 +1,4 @@
-package com.example.WAYD
+package com.example.wayd
 
 import org.junit.Test
 

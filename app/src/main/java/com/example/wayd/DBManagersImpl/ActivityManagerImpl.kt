@@ -1,13 +1,12 @@
-package com.example.WAYD.DBManagersImpl
+package com.example.wayd.dbmanagersImpl
 
 import android.util.Log
-import com.example.WAYD.DBEntities.Activity
-import com.example.WAYD.DBManagers.ActivityManager
-import com.example.WAYD.Enums.Type
+import com.example.wayd.dbentities.Activity
+import com.example.wayd.dbmanagers.ActivityManager
+import com.example.wayd.enums.Type
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.exceptions.RealmException
-import java.lang.Exception
 
 class ActivityManagerImpl : ActivityManager {
     companion object {
