@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="planets_array">
+    <string-array name="colorsArray">
         <item>Red</item>
         <item>Blue</item>
         <item>Green</item>
-
+    </string-array>
+    <string-array name="iconsArray">
+        <item>&#xf11b;</item>
+        <item>&#xf1e3;</item>
+        <item>&#xf256;</item>
+    </string-array>
+    <string-array name="typeArray">
+        <item>Value per Activity </item>
+        <item>Value per Hour</item>
     </string-array>
 </resources>

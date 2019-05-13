@@ -3,6 +3,7 @@ package com.example.wayd.activities
 import android.content.Intent
 
 import android.os.Bundle
+import android.util.Log
 import android.view.PointerIcon
 import androidx.appcompat.app.AppCompatActivity
 
@@ -13,9 +14,11 @@ import com.example.wayd.dbmanagersImpl.WAYDManagerImpl
 
 
 import com.example.wayd.R
-import com.example.wayd.ui.RecyclerViewAdapter
+import com.example.wayd.dbentities.Activity
 import com.example.wayd.dbmanagersImpl.ActivityManagerImpl
 import com.example.wayd.dbmanagersImpl.RecordManagerImpl
+import com.example.wayd.ui.RecyclerViewAdapterActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -24,41 +27,48 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val TAG: String = "MainActivity"
     }
-    private val activities: ArrayList<TmpActivity> = ArrayList()
-    private val activityManager = ActivityManagerImpl()
-    private val recordManager = RecordManagerImpl()
-    private val WAYDManager = WAYDManagerImpl()
+    private var activities: ArrayList<Activity> = ArrayList()
+    private val activityManager = ActivityManagerImpl(Realm.getDefaultInstance())
+    private val recordManager = RecordManagerImpl(Realm.getDefaultInstance())
+    private val WAYDManager = WAYDManagerImpl(Realm.getDefaultInstance())
     private lateinit var realm: Realm
     private lateinit var tvActivityData: TextView
-    private lateinit var button: Button
+    private lateinit var button: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-       // setSupportActionBar(findViewById(R.id.action_bar))
-
+        Log.d(TAG, activityManager.getallActivities().toString())
+        activities.addAll(activityManager.getallActivities())
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+        val rvAdapter = RecyclerViewAdapterActivity(activities,this)
+        rvAdapter.onItemClick = {activity ->
+            newActivity(activity._ID)
+        }
+        recyclerView.adapter = rvAdapter
 
-        recyclerView.adapter = RecyclerViewAdapter(activities,this)
+        button = findViewById(R.id.floatingDeleteButton)
+        button.setOnClickListener{
+            activityManager.deleteAllActivities()
+            recordManager.deleteAllRecords()
+            activities.clear()
+        }
 
-        activities.add(TmpActivity("School","10:00","#f44336","500 $", "&#xf2bb;"))
-        activities.add(TmpActivity("Work","19:00","#2196f3","200 $", "&#xf0b1;"))
-        activities.add(TmpActivity("Sport","55:30","#009688","500 $", "&#xf45f;"))
-        activities.add(TmpActivity("Sport","55:30","#009688","500 $", "&#xf45f;"))
-        activities.add(TmpActivity("Work","19:00","#2196f3","200 $", "&#xf0b1;"))
-        activities.add(TmpActivity("Sport","55:30","#009688","500 $", "&#xf45f;"))
-        activities.add(TmpActivity("Sport","55:30","#009688","500 $", "&#xf45f;"))
+
 
 
     }
 
 
 
-    fun newActivity( v: View) {
+    fun newActivity(activityId: Long) {
+        val intent = Intent(this, ActivityEditorActivity::class.java)
+        intent.putExtra("activityID", activityId)
+        startActivity(intent)
+    }
+
+    fun newActivity(v:View) {
         val intent = Intent(this, ActivityEditorActivity::class.java)
         startActivity(intent)
     }
 }
-
-data class TmpActivity(val name: String, val time: String, val color: String, val value: String,val icon: String)

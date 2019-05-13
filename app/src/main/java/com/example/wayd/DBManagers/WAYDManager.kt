@@ -7,10 +7,12 @@ import io.realm.RealmResults
 import java.sql.Time
 
 interface WAYDManager{
-    fun totalTimeSpentWithActivity(realm: Realm, activity: Activity):Long
-    fun averageTimeSpentWithActivity(realm: Realm, activity: Activity):Long
-    fun getAllRecordToActivity(realm: Realm, activity: Activity):RealmResults<Record>
-    fun timeSpentWithActivityDuringTimePeriod(realm: Realm, activity: Activity, timeperiod: Time):Long
-    fun valueOfActivity(realm: Realm, activity: Activity):Number
-    fun valueOfActivityOverTimePeriod(realm: Realm, activity: Activity, timeperiod: Time):Number
+    fun totalTimeSpentWithActivity( activity: Activity):Long
+    fun averageTimeSpentWithActivity( activity: Activity):Long
+    fun getAllRecordToActivity( activity: Activity):RealmResults<Record>
+    fun getAllRecordToActivity( activityId: Long):RealmResults<Record>?
+    fun timeSpentWithActivityDuringTimePeriod( activity: Activity, timeperiod: Time):Long
+    fun valueOfActivity( activity: Activity):Number
+    fun valueOfActivityOverTimePeriod( activity: Activity, timeperiod: Time):Number
+    fun valueOfRecord(activity: Activity, record: Record):Double
 }
