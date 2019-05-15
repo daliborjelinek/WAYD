@@ -9,14 +9,17 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Switch
-import com.example.wayd.activities.RecordListActivity
 import com.example.wayd.R
 import com.example.wayd.dbentities.Activity
 import com.example.wayd.dbentities.Record
 import com.example.wayd.dbmanagersImpl.ActivityManagerImpl
 import com.example.wayd.dbmanagersImpl.RecordManagerImpl
 import io.realm.Realm
+import kotlinx.android.synthetic.main.activity_editor.*
 import java.text.SimpleDateFormat
+import android.widget.AdapterView
+import com.example.wayd.UI.IconTextView
+
 
 class ActivityEditorActivity : AppCompatActivity() {
     private lateinit var buttonSave: Button
@@ -28,6 +31,7 @@ class ActivityEditorActivity : AppCompatActivity() {
     private lateinit var typeSpinner: Spinner
     private lateinit var activityManager: ActivityManagerImpl
     private lateinit var buttonViewRecord: Button
+    private lateinit var iconTextView: IconTextView
     private var unchangedActivity: Activity? = null
     private var recordManager = RecordManagerImpl(Realm.getDefaultInstance())
     companion object {
@@ -53,6 +57,7 @@ class ActivityEditorActivity : AppCompatActivity() {
         iconSpinner = findViewById(R.id.spinnerIcons)
         switchRunning = findViewById(R.id.runningSwitch)
         buttonViewRecord = findViewById(R.id.buttonViewRecords)
+        iconTextView = findViewById(R.id.activityIconTextView)
         unchangedActivity =  activityManager.getActivity(intent.getLongExtra("activityID", 0))
         if (unchangedActivity != null){
             nameEditText.setText(unchangedActivity?.name)
@@ -62,7 +67,20 @@ class ActivityEditorActivity : AppCompatActivity() {
                 switchRunning.toggle()
             }
         }
+
         setUpViewRecords()
+
+        spinnerIcons.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                    iconTextView.text = parent.getItemAtPosition(position).toString()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+        };
+
+
     }
 
     fun setUpOnCreateButtonClick(){

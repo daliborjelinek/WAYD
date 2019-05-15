@@ -35,11 +35,9 @@
             android:layout_height="wrap_content"
             android:clickable="true" app:srcCompat="@android:drawable/ic_menu_delete"
             android:id="@+id/floatingDeleteButton"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="@id/recyclerView"
-            app:layout_constraintRight_toRightOf="@id/recyclerView"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="16dp"
-            android:focusable="true" android:layout_marginEnd="324dp"/>
+
+            android:focusable="true" android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+            app:layout_constraintStart_toStartOf="@+id/recyclerView" android:layout_marginStart="10dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
