@@ -22,7 +22,7 @@
                 android:id="@+id/recordDurationTextView" android:layout_marginStart="8dp"
                 android:layout_marginBottom="3dp"
                 app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="@+id/iconTextView"/>
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="@+id/activityIconView"/>
         <TextView
                 android:text="StartTime"
                 android:textColor="@color/white"

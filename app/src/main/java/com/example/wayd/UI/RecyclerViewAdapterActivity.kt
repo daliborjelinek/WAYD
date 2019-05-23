@@ -1,7 +1,6 @@
 package com.example.wayd.ui
 
 import android.content.Context
-import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,6 @@ import io.realm.Realm
 import kotlinx.android.synthetic.main.layout_listitem.view.*
 import java.text.SimpleDateFormat
 import java.util.ArrayList
-import kotlin.math.log
 
 
 class RecyclerViewAdapterActivity(val items: ArrayList<Activity>, val context: Context) : androidx.recyclerview.widget.RecyclerView.Adapter<RecyclerViewAdapterActivity.ViewHolderActivity>() {
@@ -31,8 +29,10 @@ class RecyclerViewAdapterActivity(val items: ArrayList<Activity>, val context: C
         holder?.name?.text = items[position].name
         //holder?.time?.text = items[position].time
         holder?.value?.text = items[position].value.toString()
-        holder?.cardview?.setCardBackgroundColor(Color.parseColor(items[position].color))
+        //holder?.cardview?.setCardBackgroundColor(Color.parseColor(items[position].color))
         holder?.iconTextView?.text = items[position].icon
+      //  holder?.iconTextView?.setBackgroundColor(Color.parseColor(items[position].color))
+
         holder?.buttonRun.text = "RUN"
         holder.time.text = WAYDManager.totalTimeSpentWithActivity(items[position]).toString()
         Log.d("TAG", items[position].running.toString() + items[position].name)
@@ -91,7 +91,7 @@ class RecyclerViewAdapterActivity(val items: ArrayList<Activity>, val context: C
         val time = v.timeTextView
         val value = v.valueTextView
         val cardview = v.listItemCardView
-        val iconTextView = v.iconTextView
+        val iconTextView = v.activityIconView
         val buttonRun = v.runActivityButton
         init {
             itemView.setOnClickListener {

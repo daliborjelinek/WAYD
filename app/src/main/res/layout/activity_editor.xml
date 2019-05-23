@@ -7,10 +7,69 @@
         android:layout_height="match_parent"
 
         tools:context="com.example.wayd.activities.ActivityEditorActivity">
-    <include
-            android:id="@+id/action_bar"
-            android:elevation="5dp"
-            layout="@layout/action_bar"/>
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+
+
+            app:contentInsetStart="0dp"
+
+
+            android:layout_height="60dp"
+            android:elevation="4dp"
+            android:background="@color/white"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"
+            app:collapseIcon="?attr/homeAsUpIndicator">
+        <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+                                                           android:layout_height="match_parent"
+                                                           tools:layout_editor_absoluteX="16dp">
+
+            <androidx.appcompat.widget.AppCompatImageView android:layout_width="wrap_content"
+                                                          android:layout_height="wrap_content"
+                                                          android:onClick="onGoBackClicked"
+                                                          android:padding="15dp"
+                                                          app:layout_constraintBottom_toBottomOf="parent"
+                                                          app:layout_constraintTop_toTopOf="parent"
+                                                          app:layout_constraintStart_toStartOf="parent"
+
+                                                          app:srcCompat="?attr/homeAsUpIndicator"/>
+
+            <TextView
+                    android:text=" WAYD "
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="30dp"
+                    android:layout_height="wrap_content"
+
+                    android:id="@+id/textView2" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent" android:fontFamily="@font/kaushan"/>
+
+            <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SAVE"
+                    android:onClick="onSaveClicked"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="15sp"
+                    app:backgroundTint="@color/transparent"
+                    app:cornerRadius="3dp"
+                    app:rippleColor="#33AAAAAA"
+                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
     <androidx.constraintlayout.widget.ConstraintLayout
             android:orientation="horizontal"
             android:gravity="center|center_vertical"
@@ -23,9 +82,8 @@
 
 
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/action_bar">
+            app:layout_constraintStart_toEndOf="@id/toolbar"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
 
         <com.example.wayd.UI.IconTextView
@@ -46,29 +104,51 @@
             android:id="@+id/linearLayout3"
             android:layout_height="0dp" android:layout_width="match_parent"
             android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toEndOf="@id/activityEditorHeader"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activityEditorHeader"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp">
-        <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Name"
-                android:ems="10"
-                android:id="@+id/nameEditText"
+
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nameTextLayout"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent"/>
-        <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:ems="10"
-                android:id="@+id/valueEditText"
-                android:text="200"
-                app:layout_constraintTop_toBottomOf="@+id/nameEditText" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/segmented3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:hint="Name"
+                    android:id="@+id/nameEditText"
+                    android:ems="10"
+
+            />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent"
+                                                               android:layout_height="wrap_content" android:id="@+id/valueTextLayout"
+                                                               app:layout_constraintTop_toBottomOf="@+id/nameTextLayout" app:layout_constraintEnd_toEndOf="parent"
+                                                               app:layout_constraintStart_toStartOf="parent">
+            <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="Value"
+                    android:ems="10"
+                    android:id="@+id/valueEditText"
+                    android:text="200"
+            />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
         <Spinner
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -76,9 +156,9 @@
                 android:entries="@array/colorsArray"
                 android:spinnerMode="dialog"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/valueEditText"
+                app:layout_constraintTop_toBottomOf="@+id/valueTextLayout"
                 android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/guideline"/>
+        />
 
         <Spinner
                 android:layout_width="0dp"
@@ -88,63 +168,73 @@
                 android:entries="@array/iconsArray"
                 android:spinnerMode="dialog"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/valueEditText"
+                app:layout_constraintTop_toBottomOf="@+id/valueTextLayout"
                 android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="@+id/guideline"/>
+        />
 
-        <Spinner
-                android:layout_width="0dp"
+        <!--<Spinner-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="40dp"-->
+                <!--android:id="@+id/spinnerActivityType"-->
+                <!--android:entries="@array/typeArray"-->
+                <!--android:spinnerMode="dialog"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/spinnerColors" app:layout_constraintEnd_toEndOf="parent"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--android:layout_marginTop="8dp"/>-->
+
+
+        <info.hoang8f.android.segmented.SegmentedGroup
+                xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/segmented3"
+                android:layout_width="match_parent"
+
                 android:layout_height="40dp"
-                android:id="@+id/spinnerActivityType"
-                android:entries="@array/typeArray"
-                android:spinnerMode="dialog"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerColors" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                segmentedgroup:sc_tint_color="@color/colorPrimaryDark"
+                segmentedgroup:sc_corner_radius="3dp"
+                segmentedgroup:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-                android:id="@+id/textSwitchRunning"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Run on creation"
-                app:layout_constraintStart_toStartOf="@+id/spinnerActivityType"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerActivityType"
-                android:layout_marginTop="8dp"/>
+            <RadioButton
+                    android:id="@+id/perActivityRadioButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Value Per Activity"
 
-        <Switch
-                android:id="@+id/runningSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@+id/textSwitchRunning"
-                app:layout_constraintStart_toStartOf="@+id/textSwitchRunning" android:layout_marginTop="44dp"/>
+                    android:layout_weight="1"
+                    style="@style/RadioButton"/>
 
+            <RadioButton
+                    android:id="@+id/perHourRadioButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Value per hour"
+                    android:layout_weight="1"
+                    style="@style/RadioButton"/>
+
+
+        </info.hoang8f.android.segmented.SegmentedGroup>
+
+        <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Create"-->
+                <!--android:id="@+id/buttonSave"-->
+                <!--android:layout_marginStart="8dp"-->
+                <!--app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="16dp"-->
+                <!--app:layout_constraintBottom_toBottomOf="parent"/>-->
         <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Create"
-                android:id="@+id/buttonSave"
-                android:layout_marginStart="8dp"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-        <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="ViewRecords"
                 android:id="@+id/buttonViewRecords"
-                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="8dp"/>
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintTop_toBottomOf="@+id/textSwitchRunning"
-                app:layout_constraintLeft_toRightOf="parent"
-                app:layout_constraintRight_toLeftOf="parent"
-                android:id="@+id/constraintLayout" app:layout_constraintBottom_toBottomOf="parent">
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content" android:id="@+id/guideline"
-                                                    android:orientation="vertical"
-                                                    app:layout_constraintGuide_percent="0.5"/>
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/spinnerColors"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                android:background="@color/colorPrimaryDark" android:textColor="@color/white"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

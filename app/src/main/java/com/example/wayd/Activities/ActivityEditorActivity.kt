@@ -1,14 +1,12 @@
 package com.example.wayd.activities
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.Switch
+import android.widget.*
 import com.example.wayd.R
 import com.example.wayd.dbentities.Activity
 import com.example.wayd.dbentities.Record
@@ -17,25 +15,29 @@ import com.example.wayd.dbmanagersImpl.RecordManagerImpl
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_editor.*
 import java.text.SimpleDateFormat
-import android.widget.AdapterView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.wayd.UI.IconTextView
 
 
 class ActivityEditorActivity : AppCompatActivity() {
-    private lateinit var buttonSave: Button
+    //private lateinit var buttonSave: Button
+    private lateinit var editorHeader: ConstraintLayout
+    private lateinit var perActivityOption: RadioButton
+    private lateinit var perHourOption: RadioButton
     private lateinit var nameEditText: EditText
     private lateinit var valueEditText: EditText
     private lateinit var colorSpinner: Spinner
     private lateinit var iconSpinner: Spinner
     private lateinit var switchRunning: Switch
-    private lateinit var typeSpinner: Spinner
     private lateinit var activityManager: ActivityManagerImpl
     private lateinit var buttonViewRecord: Button
     private lateinit var iconTextView: IconTextView
     private var unchangedActivity: Activity? = null
     private var recordManager = RecordManagerImpl(Realm.getDefaultInstance())
+    private var selectedActivityType = "Value per Activity"
     companion object {
         const val TAG: String = "EditorActivity"
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,14 +50,17 @@ class ActivityEditorActivity : AppCompatActivity() {
 
     fun setUpUiComponents(){
 
-        buttonSave = findViewById(R.id.buttonSave)
-        setUpOnCreateButtonClick()
+
+        editorHeader = findViewById(R.id.activityEditorHeader)
+        perActivityOption = findViewById(R.id.perActivityRadioButton)
+        perActivityOption.isChecked = true
+        perHourOption = findViewById(R.id.perHourRadioButton)
         nameEditText = findViewById(R.id.nameEditText)
         valueEditText = findViewById(R.id.valueEditText)
         colorSpinner = findViewById(R.id.spinnerColors)
-        typeSpinner = findViewById(R.id.spinnerActivityType)
+       // typeSpinner = findViewById(R.id.spinnerActivityType)
         iconSpinner = findViewById(R.id.spinnerIcons)
-        switchRunning = findViewById(R.id.runningSwitch)
+
         buttonViewRecord = findViewById(R.id.buttonViewRecords)
         iconTextView = findViewById(R.id.activityIconTextView)
         unchangedActivity =  activityManager.getActivity(intent.getLongExtra("activityID", 0))
@@ -64,54 +69,79 @@ class ActivityEditorActivity : AppCompatActivity() {
             valueEditText.setText(unchangedActivity?.value.toString())
             Log.d(TAG, unchangedActivity?.running.toString())
             if (unchangedActivity?.running!!) {
-                switchRunning.toggle()
+             //   switchRunning.toggle()
             }
         }
 
         setUpViewRecords()
 
         spinnerIcons.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                     iconTextView.text = parent.getItemAtPosition(position).toString()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
 
             }
-        };
+        }
+
+        spinnerColors.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+
+                editorHeader.setBackgroundColor(Color.parseColor(parent.getItemAtPosition(position).toString()))
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+        }
 
 
     }
 
-    fun setUpOnCreateButtonClick(){
-        buttonSave.setOnClickListener(){
-            var primaryKey = intent.getLongExtra("activityID", 0 )
-            if (primaryKey == 0L){
-                 primaryKey = activityManager.getNextPrimaryKey()
-            }
-            activityManager.addOrUpdateActivity(
-                Activity(
-                    primaryKey,
-                    nameEditText.text.toString(),
-                    mapColor(colorSpinner.selectedItem.toString()),
-                    valueEditText.text.toString().toDouble(),
-                    switchRunning.isChecked,
-                    typeSpinner.selectedItem.toString(),
-                    iconSpinner.selectedItem.toString()
-            ))
-            if(switchRunning.isChecked){
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-                recordManager.addOrUpdateRecord(
-                    Record(
-                        recordManager.getNextPrimaryKey(),
-                        System.currentTimeMillis(),
-                        primaryKey,
-                        0L
-                    )
-                )
-            }
-            switchToMainActivity()
+//    fun setUpOnCreateButtonClick(){
+//        buttonSave.setOnClickListener(){
+//            var primaryKey = intent.getLongExtra("activityID", 0 )
+//            if (primaryKey == 0L){
+//                 primaryKey = activityManager.getNextPrimaryKey()
+//            }
+//            activityManager.addOrUpdateActivity(
+//                Activity(
+//                    primaryKey,
+//                    nameEditText.text.toString(),
+//                    mapColor(colorSpinner.selectedItem.toString()),
+//                    valueEditText.text.toString().toDouble(),
+//                    false,
+//                   "Value per activity",
+//                    iconSpinner.selectedItem.toString()
+//            ))
+//
+//            switchToMainActivity()
+//        }
+//    }
+
+    fun onGoBackClicked( view: View) {
+        switchToMainActivity()
+    }
+
+    fun onSaveClicked( view: View) {
+        var primaryKey = intent.getLongExtra("activityID", 0 )
+        if (primaryKey == 0L){
+            primaryKey = activityManager.getNextPrimaryKey()
         }
+        activityManager.addOrUpdateActivity(
+            Activity(
+                primaryKey,
+                nameEditText.text.toString(),
+                mapColor(colorSpinner.selectedItem.toString()),
+                valueEditText.text.toString().toDouble(),
+                false,
+                "Value per activity",
+                iconSpinner.selectedItem.toString()
+            ))
+
+        switchToMainActivity()
+
     }
 
     fun setUpManagers(){
