@@ -1,10 +1,12 @@
 package com.example.wayd.ui
 
 import android.content.Context
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.DrawableCompat
 import com.example.wayd.R
 import com.example.wayd.dbentities.Activity
 import com.example.wayd.dbentities.Record
@@ -29,17 +31,22 @@ class RecyclerViewAdapterActivity(val items: ArrayList<Activity>, val context: C
         holder?.name?.text = items[position].name
         //holder?.time?.text = items[position].time
         holder?.value?.text = items[position].value.toString()
-        //holder?.cardview?.setCardBackgroundColor(Color.parseColor(items[position].color))
-        holder?.iconTextView?.text = items[position].icon
-      //  holder?.iconTextView?.setBackgroundColor(Color.parseColor(items[position].color))
 
-        holder?.buttonRun.text = "RUN"
+        holder?.iconTextView?.text = items[position].icon
+        holder?.cardview?.setCardBackgroundColor(Color.parseColor("#ffffff"))
+        DrawableCompat.setTint(holder?.iconTextView.getBackground(), Color.parseColor(items[position].color))
+        holder?.iconTextView.setTextColor(Color.parseColor("#ffffff"))
+
+
         holder.time.text = WAYDManager.totalTimeSpentWithActivity(items[position]).toString()
         Log.d("TAG", items[position].running.toString() + items[position].name)
         if (items[position].running){
-            holder?.buttonRun.text = "STOP"
+            holder?.cardview?.setCardBackgroundColor(Color.parseColor(items[position].color))
+            DrawableCompat.setTint(holder?.iconTextView.getBackground(), Color.parseColor("#ffffff"))
+            holder?.iconTextView.setTextColor(Color.parseColor(items[position].color))
+
         }
-        holder?.buttonRun.setOnClickListener {
+        holder?.iconTextView.setOnClickListener {
             val activity = Activity(
                 items[position]._ID,
                 items[position].name,
@@ -57,7 +64,10 @@ class RecyclerViewAdapterActivity(val items: ArrayList<Activity>, val context: C
                     lastRecord?.endTime = System.currentTimeMillis()
                     recordManager.addOrUpdateRecord(lastRecord)
                     activity.running = false
-                    holder?.buttonRun.text = "RUN"
+                    holder?.cardview?.setCardBackgroundColor(Color.parseColor("#ffffff"))
+                    DrawableCompat.setTint(holder?.iconTextView.getBackground(), Color.parseColor(items[position].color))
+                    holder?.iconTextView.setTextColor(Color.parseColor("#ffffff"))
+
                 }
 
             } else{
@@ -68,7 +78,9 @@ class RecyclerViewAdapterActivity(val items: ArrayList<Activity>, val context: C
                     0L)
                 recordManager.addOrUpdateRecord(newRecord)
                 activity.running = true
-                holder?.buttonRun.text = "STOP"
+                holder?.cardview?.setCardBackgroundColor(Color.parseColor(items[position].color))
+                DrawableCompat.setTint(holder?.iconTextView.getBackground(), Color.parseColor("#ffffff"))
+                holder?.iconTextView.setTextColor(Color.parseColor(items[position].color))
             }
             activityManager.addOrUpdateActivity(activity)
         }
@@ -92,7 +104,6 @@ class RecyclerViewAdapterActivity(val items: ArrayList<Activity>, val context: C
         val value = v.valueTextView
         val cardview = v.listItemCardView
         val iconTextView = v.activityIconView
-        val buttonRun = v.runActivityButton
         init {
             itemView.setOnClickListener {
                 onItemClick?.invoke(items[adapterPosition])

@@ -17,6 +17,11 @@ import kotlinx.android.synthetic.main.activity_editor.*
 import java.text.SimpleDateFormat
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.wayd.UI.IconTextView
+import android.widget.Toast
+import com.example.wayd.enums.Type
+import com.yarolegovich.lovelydialog.LovelyStandardDialog
+
+
 
 
 class ActivityEditorActivity : AppCompatActivity() {
@@ -58,7 +63,6 @@ class ActivityEditorActivity : AppCompatActivity() {
         nameEditText = findViewById(R.id.nameEditText)
         valueEditText = findViewById(R.id.valueEditText)
         colorSpinner = findViewById(R.id.spinnerColors)
-       // typeSpinner = findViewById(R.id.spinnerActivityType)
         iconSpinner = findViewById(R.id.spinnerIcons)
 
         buttonViewRecord = findViewById(R.id.buttonViewRecords)
@@ -68,9 +72,8 @@ class ActivityEditorActivity : AppCompatActivity() {
             nameEditText.setText(unchangedActivity?.name)
             valueEditText.setText(unchangedActivity?.value.toString())
             Log.d(TAG, unchangedActivity?.running.toString())
-            if (unchangedActivity?.running!!) {
-             //   switchRunning.toggle()
-            }
+
+
         }
 
         setUpViewRecords()
@@ -97,28 +100,22 @@ class ActivityEditorActivity : AppCompatActivity() {
         }
 
 
+
     }
 
-//    fun setUpOnCreateButtonClick(){
-//        buttonSave.setOnClickListener(){
-//            var primaryKey = intent.getLongExtra("activityID", 0 )
-//            if (primaryKey == 0L){
-//                 primaryKey = activityManager.getNextPrimaryKey()
-//            }
-//            activityManager.addOrUpdateActivity(
-//                Activity(
-//                    primaryKey,
-//                    nameEditText.text.toString(),
-//                    mapColor(colorSpinner.selectedItem.toString()),
-//                    valueEditText.text.toString().toDouble(),
-//                    false,
-//                   "Value per activity",
-//                    iconSpinner.selectedItem.toString()
-//            ))
-//
-//            switchToMainActivity()
-//        }
-//    }
+
+    fun tryDeleteActivity( v: View){
+        LovelyStandardDialog(this, LovelyStandardDialog.ButtonLayout.HORIZONTAL)
+            .setTopColorRes(R.color.design_default_color_primary)
+            .setButtonsColorRes(R.color.design_default_color_primary)
+            .setIcon(getDrawable(R.drawable.ic_trash))
+            .setTitle("Delete selected activity")
+            .setMessage("Do you really want to delete this activity?")
+            .setPositiveButton("YES",
+                View.OnClickListener { Toast.makeText(v.context, "positive clicked", Toast.LENGTH_SHORT).show() })
+            .setNegativeButton("NO", null)
+            .show()
+    }
 
     fun onGoBackClicked( view: View) {
         switchToMainActivity()
@@ -133,7 +130,7 @@ class ActivityEditorActivity : AppCompatActivity() {
             Activity(
                 primaryKey,
                 nameEditText.text.toString(),
-                mapColor(colorSpinner.selectedItem.toString()),
+                colorSpinner.selectedItem.toString(),
                 valueEditText.text.toString().toDouble(),
                 false,
                 "Value per activity",

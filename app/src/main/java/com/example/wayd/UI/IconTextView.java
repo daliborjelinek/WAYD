@@ -4,9 +4,9 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.widget.TextView;
+import androidx.appcompat.widget.AppCompatTextView;
 
-public class IconTextView extends TextView {
+public class IconTextView extends AppCompatTextView {
     private Context context;
 
     public IconTextView(Context context) {
