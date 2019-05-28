@@ -15,4 +15,5 @@ interface WAYDManager{
     fun valueOfActivity( activity: Activity):Number
     fun valueOfActivityOverTimePeriod( activity: Activity, timeperiod: Time):Number
     fun valueOfRecord(activity: Activity, record: Record):Double
+    fun safeDeleteActivity(activity: Activity)
 }

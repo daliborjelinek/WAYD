@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat
 
 class WAYDManagerImpl(val realm: Realm) : WAYDManager {
     val recordManager = RecordManagerImpl(Realm.getDefaultInstance())
+    val activityManager = ActivityManagerImpl(Realm.getDefaultInstance())
     override fun valueOfRecord(activity: Activity, record: Record):Double {
         return activity.value*toHours(recordManager.getTimeSpent(record))
     }
@@ -67,7 +68,11 @@ class WAYDManagerImpl(val realm: Realm) : WAYDManager {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-
+    override fun safeDeleteActivity(activity: Activity) {
+        val records = getAllRecordToActivity(activity)
+        records.forEach{recordManager.deleteRecord(it)}
+        activityManager.deleteActivity(activity)
+    }
     fun toHours(timeInMilis:Long):Long{
         return timeInMilis / (MIN * SEC * MILIS*1000) % HOUR
     }
