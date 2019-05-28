@@ -4,12 +4,11 @@ import android.content.Intent
 
 import android.os.Bundle
 import android.util.Log
-import android.view.PointerIcon
 import androidx.appcompat.app.AppCompatActivity
 
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
+import com.example.wayd.Constants
 import com.example.wayd.dbmanagersImpl.WAYDManagerImpl
 
 
@@ -53,8 +52,10 @@ class MainActivity : AppCompatActivity() {
             recordManager.deleteAllRecords()
             activities.clear()
         }
-
-
+        if (intent.action.equals("WidgetClicked")){
+            val value = intent.getIntExtra(Constants.ACTIVITY_ID_WIDGET_INTENT,0).toString()
+            Log.d("MAINACT",value)
+        }
 
 
     }
