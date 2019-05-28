@@ -125,7 +125,7 @@
             <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Name"
+                    android:text=""
                     android:hint="Name"
                     android:id="@+id/nameEditText"
                     android:ems="10"
@@ -143,7 +143,8 @@
                     android:hint="Value"
                     android:ems="10"
                     android:id="@+id/valueEditText"
-                    android:text="200"
+                    android:text=""
+
             />
 
         </com.google.android.material.textfield.TextInputLayout>

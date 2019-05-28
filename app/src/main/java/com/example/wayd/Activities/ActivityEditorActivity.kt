@@ -9,23 +9,27 @@ import android.view.View
 import android.widget.*
 import com.example.wayd.R
 import com.example.wayd.dbentities.Activity
-import com.example.wayd.dbentities.Record
 import com.example.wayd.dbmanagersImpl.ActivityManagerImpl
-import com.example.wayd.dbmanagersImpl.RecordManagerImpl
+
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_editor.*
-import java.text.SimpleDateFormat
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.wayd.UI.IconTextView
 import android.widget.Toast
 import com.example.wayd.enums.Type
 import com.yarolegovich.lovelydialog.LovelyStandardDialog
+import android.widget.ArrayAdapter
+
+import android.widget.Spinner
+
+
+
+
 
 
 
 
 class ActivityEditorActivity : AppCompatActivity() {
-    //private lateinit var buttonSave: Button
     private lateinit var editorHeader: ConstraintLayout
     private lateinit var perActivityOption: RadioButton
     private lateinit var perHourOption: RadioButton
@@ -33,13 +37,11 @@ class ActivityEditorActivity : AppCompatActivity() {
     private lateinit var valueEditText: EditText
     private lateinit var colorSpinner: Spinner
     private lateinit var iconSpinner: Spinner
-    private lateinit var switchRunning: Switch
     private lateinit var activityManager: ActivityManagerImpl
     private lateinit var buttonViewRecord: Button
     private lateinit var iconTextView: IconTextView
     private var unchangedActivity: Activity? = null
-    private var recordManager = RecordManagerImpl(Realm.getDefaultInstance())
-    private var selectedActivityType = "Value per Activity"
+    private var selectedActivityType = Type.perActivity.name
     companion object {
         const val TAG: String = "EditorActivity"
 
@@ -72,11 +74,29 @@ class ActivityEditorActivity : AppCompatActivity() {
             nameEditText.setText(unchangedActivity?.name)
             valueEditText.setText(unchangedActivity?.value.toString())
             Log.d(TAG, unchangedActivity?.running.toString())
+            if(unchangedActivity!!.type == Type.perActivity.name){
+                    perActivityOption.isChecked = true
+            }
+            else{
+                perHourOption.isChecked = true
+
+            }
+
+            spinnerIcons.setSelection((getSpinnerIndex(spinnerIcons,unchangedActivity!!.icon)))
+            spinnerColors.setSelection((getSpinnerIndex(spinnerColors,unchangedActivity!!.color)))
 
 
         }
+        else{
+            buttonViewRecord.visibility = View.INVISIBLE
+        }
 
         setUpViewRecords()
+
+
+
+
+
 
         spinnerIcons.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
@@ -106,16 +126,20 @@ class ActivityEditorActivity : AppCompatActivity() {
 
     fun tryDeleteActivity( v: View){
         LovelyStandardDialog(this, LovelyStandardDialog.ButtonLayout.HORIZONTAL)
-            .setTopColorRes(R.color.design_default_color_primary)
-            .setButtonsColorRes(R.color.design_default_color_primary)
+            .setTopColor(Color.parseColor(unchangedActivity!!.color))
             .setIcon(getDrawable(R.drawable.ic_trash))
             .setTitle("Delete selected activity")
             .setMessage("Do you really want to delete this activity?")
             .setPositiveButton("YES",
-                View.OnClickListener { Toast.makeText(v.context, "positive clicked", Toast.LENGTH_SHORT).show() })
+                View.OnClickListener {
+                    activityManager.deleteActivity(unchangedActivity!!)
+                    switchToMainActivity()
+                })
             .setNegativeButton("NO", null)
             .show()
     }
+
+
 
     fun onGoBackClicked( view: View) {
         switchToMainActivity()
@@ -126,6 +150,8 @@ class ActivityEditorActivity : AppCompatActivity() {
         if (primaryKey == 0L){
             primaryKey = activityManager.getNextPrimaryKey()
         }
+        selectedActivityType = if (perActivityOption.isChecked) Type.perActivity.name
+        else Type.perHour.name
         activityManager.addOrUpdateActivity(
             Activity(
                 primaryKey,
@@ -133,7 +159,7 @@ class ActivityEditorActivity : AppCompatActivity() {
                 colorSpinner.selectedItem.toString(),
                 valueEditText.text.toString().toDouble(),
                 false,
-                "Value per activity",
+                selectedActivityType,
                 iconSpinner.selectedItem.toString()
             ))
 
@@ -157,6 +183,17 @@ class ActivityEditorActivity : AppCompatActivity() {
             "GREEN" -> return "#009688"
         }
         return ""
+    }
+
+    //private method of your class
+    private fun getSpinnerIndex(spinner: Spinner, myString: String): Int {
+        for (i in 0 until spinner.count) {
+            if (spinner.getItemAtPosition(i).toString().equals(myString, ignoreCase = true)) {
+                return i
+            }
+        }
+
+        return 0
     }
 
     fun switchToMainActivity() {

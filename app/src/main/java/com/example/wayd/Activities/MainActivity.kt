@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.constraintlayout.widget.Placeholder
 import com.example.wayd.dbmanagersImpl.WAYDManagerImpl
 
 
@@ -29,17 +30,13 @@ class MainActivity : AppCompatActivity() {
     }
     private var activities: ArrayList<Activity> = ArrayList()
     private val activityManager = ActivityManagerImpl(Realm.getDefaultInstance())
-    private val recordManager = RecordManagerImpl(Realm.getDefaultInstance())
-    private val WAYDManager = WAYDManagerImpl(Realm.getDefaultInstance())
-    private lateinit var realm: Realm
-    private lateinit var tvActivityData: TextView
-    private lateinit var button: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Log.d(TAG, activityManager.getallActivities().toString())
         activities.addAll(activityManager.getallActivities())
+        if(activities.size>0) findViewById<TextView>(R.id.activiyListPlaceholder).visibility = View.INVISIBLE
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         val rvAdapter = RecyclerViewAdapterActivity(activities,this)
         rvAdapter.onItemClick = {activity ->
@@ -47,12 +44,7 @@ class MainActivity : AppCompatActivity() {
         }
         recyclerView.adapter = rvAdapter
 
-        button = findViewById(R.id.floatingDeleteButton)
-        button.setOnClickListener{
-            activityManager.deleteAllActivities()
-            recordManager.deleteAllRecords()
-            activities.clear()
-        }
+
 
 
 

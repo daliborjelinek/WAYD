@@ -25,10 +25,10 @@ class RecyclerViewAdapterRecord(val items: ArrayList<Record>, val context: Conte
     val activityManager = ActivityManagerImpl(Realm.getDefaultInstance())
     override fun onBindViewHolder(holder: ViewHolderRecord, position: Int) {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        holder?.timeStarted?.text = dateFormat.format(items[position].timeStarted)
-        holder?.endTime?.text = dateFormat.format(items[position].endTime)
-        holder.duration.text = recordManager.formatDate(recordManager.getTimeSpent(items[position]))
-        holder.value.text = WAYDManager.valueOfRecord(activityManager.getActivity(items[position].activityId)!!,items[position]).toString()
+      //  holder?.timeStarted?.text = dateFormat.format(items[position].timeStarted)
+      //  holder?.endTime?.text = dateFormat.format(items[position].endTime)
+      //  holder.duration.text = recordManager.formatDate(recordManager.getTimeSpent(items[position]))
+      //  holder.value.text = WAYDManager.valueOfRecord(activityManager.getActivity(items[position].activityId)!!,items[position]).toString()
 
     }
 
@@ -43,10 +43,10 @@ class RecyclerViewAdapterRecord(val items: ArrayList<Record>, val context: Conte
 
     inner class ViewHolderRecord(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v) {
 
-        val timeStarted = v.recordStartTimeTextView
-        val endTime = v.recordEndTimeTextView
-        val value = v.recordValueTextView
-        val duration = v.recordDurationTextView
+       // val timeStarted = v.recordStartTimeTextView
+       // val endTime = v.recordEndTimeTextView
+       // val value = v.recordValueTextView
+       // val duration = v.recordDurationTextView
 
         init {
             itemView.setOnClickListener {

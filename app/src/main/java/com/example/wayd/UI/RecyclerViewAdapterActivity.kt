@@ -29,8 +29,6 @@ class RecyclerViewAdapterActivity(val items: ArrayList<Activity>, val context: C
     override fun onBindViewHolder(holder: ViewHolderActivity, position: Int) {
 
         holder?.name?.text = items[position].name
-        //holder?.time?.text = items[position].time
-        holder?.value?.text = items[position].value.toString()
 
         holder?.iconTextView?.text = items[position].icon
         holder?.cardview?.setCardBackgroundColor(Color.parseColor("#ffffff"))
@@ -38,7 +36,7 @@ class RecyclerViewAdapterActivity(val items: ArrayList<Activity>, val context: C
         holder?.iconTextView.setTextColor(Color.parseColor("#ffffff"))
 
 
-        holder.time.text = WAYDManager.totalTimeSpentWithActivity(items[position]).toString()
+        //holder.time.text = WAYDManager.totalTimeSpentWithActivity(items[position]).toString()
         Log.d("TAG", items[position].running.toString() + items[position].name)
         if (items[position].running){
             holder?.cardview?.setCardBackgroundColor(Color.parseColor(items[position].color))
@@ -100,8 +98,8 @@ class RecyclerViewAdapterActivity(val items: ArrayList<Activity>, val context: C
 
 
         val name = v.nameTextView
-        val time = v.timeTextView
-        val value = v.valueTextView
+        //val time = v.timeTextView
+       // val value = v.valueTextView
         val cardview = v.listItemCardView
         val iconTextView = v.activityIconView
         init {
