@@ -1,22 +1,93 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/widget_margin"
-                android:background="#09C">
-
-
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-    >
-        <ImageView
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+>
+    <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent">
+        <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_add"
-                android:id="@+id/widgetIconTest"
+                android:fontFamily="@font/font_awesome"
+                android:text="&#xf19d;"
+                android:textSize="60dp"
+                android:id="@+id/widgetIconOne"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
         />
-
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_awesome"
+                android:text="&#xf19d;"
+                android:textSize="60dp"
+                android:id="@+id/widgetIconTwo"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+        />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_awesome"
+                android:text="&#xf19d;"
+                android:textSize="60dp"
+                android:id="@+id/widgetIconThree"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+        />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_awesome"
+                android:text="&#xf19d;"
+                android:textSize="60dp"
+                android:id="@+id/widgetIconFour"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+        />
     </LinearLayout>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                    android:id="@+id/widgetTvOne"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Run"
+                    android:textSize="30dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="-10dp"
+            />
+        <TextView
+                android:id="@+id/widgetTvTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Run"
+                android:textSize="30dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="-10dp"
+        />
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Run"
+                    android:textSize="30dp"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginTop="-10dp"
+                    android:id="@+id/widgetTvThree"
 
+            />
+            <TextView
+                    android:id="@+id/widgetTvFour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Run"
+                    android:textSize="30dp"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginTop="-10dp"
+            />
+    </LinearLayout>
 </LinearLayout>

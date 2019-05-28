@@ -52,10 +52,7 @@ class MainActivity : AppCompatActivity() {
             recordManager.deleteAllRecords()
             activities.clear()
         }
-        if (intent.action.equals("WidgetClicked")){
-            val value = intent.getIntExtra(Constants.ACTIVITY_ID_WIDGET_INTENT,0).toString()
-            Log.d("MAINACT",value)
-        }
+
 
 
     }
