@@ -39,6 +39,7 @@ class ActivityEditorActivity : AppCompatActivity() {
     private lateinit var iconSpinner: Spinner
     private lateinit var activityManager: ActivityManagerImpl
     private lateinit var buttonViewRecord: Button
+    private lateinit var buttonDeleteActivity: Button
     private lateinit var iconTextView: IconTextView
     private var unchangedActivity: Activity? = null
     private var selectedActivityType = Type.perActivity.name
@@ -66,7 +67,7 @@ class ActivityEditorActivity : AppCompatActivity() {
         valueEditText = findViewById(R.id.valueEditText)
         colorSpinner = findViewById(R.id.spinnerColors)
         iconSpinner = findViewById(R.id.spinnerIcons)
-
+        buttonDeleteActivity = findViewById(R.id.buttonDelete)
         buttonViewRecord = findViewById(R.id.buttonViewRecords)
         iconTextView = findViewById(R.id.activityIconTextView)
         unchangedActivity =  activityManager.getActivity(intent.getLongExtra("activityID", 0))
@@ -89,6 +90,7 @@ class ActivityEditorActivity : AppCompatActivity() {
         }
         else{
             buttonViewRecord.visibility = View.INVISIBLE
+            buttonDeleteActivity.visibility = View.INVISIBLE
         }
 
         setUpViewRecords()
