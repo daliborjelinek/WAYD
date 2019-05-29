@@ -54,4 +54,9 @@ class RecordListActivity : AppCompatActivity() {
         val intent = Intent(this, RecordEditorActivity::class.java)
         startActivity(intent)
     }
+
+    fun onGoBackClicked(v: View) {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
 }
