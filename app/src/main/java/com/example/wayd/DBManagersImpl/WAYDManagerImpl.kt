@@ -28,7 +28,7 @@ class WAYDManagerImpl(val realm: Realm) : WAYDManager {
     override fun totalTimeSpentWithActivity( activity: Activity): Long {
         val records = getAllRecordToActivity(activity)
         val sum = records.sumBy { rec -> recordManagerImpl.getTimeSpent(rec).toInt()}.toLong()
-        Log.d(TAG, "Sucesfully summed all recors to activity $activity")
+        Log.d(TAG, "Total time spent $sum with activity $activity")
         return sum
     }
 

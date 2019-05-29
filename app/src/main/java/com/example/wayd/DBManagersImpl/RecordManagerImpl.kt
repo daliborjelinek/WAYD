@@ -38,12 +38,25 @@ class RecordManagerImpl(val realm: Realm) : RecordManager {
     }
 
     override fun getRecord(id:Long): Record {
+        Log.d("Testing", id.toString())
         val record = realm.where(Record::class.java).equalTo("_ID", id).findFirst()!!
         Log.d(TAG, "Succesfully retrieved record $record")
-        return record
+            return record
     }
 
     override fun deleteRecord(record: Record){
+        try{
+            realm.beginTransaction()
+            record.deleteFromRealm()
+            realm.commitTransaction()
+            Log.d(TAG, "Succesfullt deleted record $record")
+        } catch (e: Exception){
+            Log.e(TAG, "deleting record $record")
+        }
+    }
+
+    override fun deleteRecord(Id: Long) {
+            val record = getRecord(Id)
         try{
             realm.beginTransaction()
             record.deleteFromRealm()

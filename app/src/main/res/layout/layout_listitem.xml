@@ -63,7 +63,8 @@
                         app:format="###,###"
                         app:amount="256560"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" android:id="@+id/textView3"
+                        android:layout_height="match_parent"
+                        android:id="@+id/totalValueTv"
                         app:gravity="center"/>
             </LinearLayout>
             <LinearLayout
@@ -80,7 +81,8 @@
                         android:text="1d 25h"
                         android:textSize="18sp"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" android:id="@+id/textView4" android:gravity="center"/>
+                        android:layout_height="match_parent"
+                        android:id="@+id/totalTimeSpenTv" android:gravity="center"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -99,7 +101,8 @@
                         app:amount="256560"
                         app:baseTextColor="@color/gray_trans"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" android:id="@+id/valueTextView"/>
+                        android:layout_height="match_parent"
+                        android:id="@+id/valueTextView"/>
             </LinearLayout>
         </LinearLayout>
         <TextView

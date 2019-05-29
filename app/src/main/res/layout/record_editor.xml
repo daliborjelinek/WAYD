@@ -58,7 +58,6 @@ tools:context="com.example.wayd.activities.RecordEditorActivity">
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="SAVE"
-                    android:onClick="onSaveClicked"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="15sp"
                     app:backgroundTint="@color/transparent"
@@ -98,7 +97,7 @@ tools:context="com.example.wayd.activities.RecordEditorActivity">
                     android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView14"
+                    android:id="@+id/startDateTvRecordEditor"
                     app:layout_constraintTop_toBottomOf="@+id/textView12" app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="8dp" android:layout_marginTop="8dp"/>
@@ -108,8 +107,8 @@ tools:context="com.example.wayd.activities.RecordEditorActivity">
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView16"
-                    app:layout_constraintTop_toBottomOf="@+id/textView14" app:layout_constraintStart_toStartOf="parent"
+                    android:id="@+id/startTimeTvRecordEditor"
+                    app:layout_constraintTop_toBottomOf="@+id/startDateTvRecordEditor" app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="8dp"/>
             <LinearLayout
@@ -117,7 +116,7 @@ tools:context="com.example.wayd.activities.RecordEditorActivity">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline" android:layout_marginStart="8dp"
-                    app:layout_constraintTop_toBottomOf="@+id/textView16" android:layout_marginBottom="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/startTimeTvRecordEditor" android:layout_marginBottom="8dp"
                     app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp">
                 <Button
                         android:text="&#xf783;"
@@ -134,9 +133,8 @@ tools:context="com.example.wayd.activities.RecordEditorActivity">
                         android:fontFamily="@font/fa_solid_900"
                         android:layout_width="match_parent"
                         android:layout_weight="1"
-                        android:onClick="editDate"
                         android:layout_height="wrap_content"
-                        android:id="@+id/button" android:layout_marginTop="8dp"
+                        android:id="@+id/buttonEditStartTime" android:layout_marginTop="8dp"
                 />
             </LinearLayout>
             <androidx.constraintlayout.widget.Guideline
@@ -163,7 +161,7 @@ tools:context="com.example.wayd.activities.RecordEditorActivity">
                     android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView15"
+                    android:id="@+id/endDateTvRecordEditor"
                     app:layout_constraintTop_toBottomOf="@+id/textView13" app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="8dp" android:layout_marginTop="8dp"/>
@@ -173,8 +171,8 @@ tools:context="com.example.wayd.activities.RecordEditorActivity">
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView17" app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="8dp" app:layout_constraintTop_toBottomOf="@+id/textView15"
+                    android:id="@+id/endTimeTvRecordEditor" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp" app:layout_constraintTop_toBottomOf="@+id/endDateTvRecordEditor"
                     app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"/>
             <LinearLayout
                     android:orientation="horizontal"
@@ -183,7 +181,7 @@ tools:context="com.example.wayd.activities.RecordEditorActivity">
                     android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="8dp" android:layout_marginBottom="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView17">
+                    app:layout_constraintTop_toBottomOf="@+id/endTimeTvRecordEditor">
                 <Button
                         android:text="&#xf783;"
                         android:textSize="20dp"
@@ -200,14 +198,14 @@ tools:context="com.example.wayd.activities.RecordEditorActivity">
                         android:layout_width="match_parent"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:id="@+id/button2" android:layout_marginTop="8dp"
+                        android:id="@+id/buttonEditEndTime" android:layout_marginTop="8dp"
                 />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
     <Button
 
-            android:text="Delelte"
+            android:text="Delete"
             android:onClick="tryDeleteRecord"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

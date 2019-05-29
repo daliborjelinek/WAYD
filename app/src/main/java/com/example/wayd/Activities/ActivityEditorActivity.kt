@@ -15,10 +15,8 @@ import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_editor.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.wayd.UI.IconTextView
-import android.widget.Toast
 import com.example.wayd.enums.Type
 import com.yarolegovich.lovelydialog.LovelyStandardDialog
-import android.widget.ArrayAdapter
 
 import android.widget.Spinner
 
@@ -148,6 +146,15 @@ class ActivityEditorActivity : AppCompatActivity() {
     }
 
     fun onSaveClicked( view: View) {
+        if (nameEditText.text.isEmpty() or valueEditText.text.isEmpty()){
+            LovelyStandardDialog(this, LovelyStandardDialog.ButtonLayout.HORIZONTAL)
+                .setTopColor(Color.parseColor(colorSpinner.selectedItem.toString()))
+                .setTitle("No Data provided")
+                .setMessage("Name and value cannot be empty")
+                .setNegativeButton("OK", null)
+                .show()
+            return
+        }
         var primaryKey = intent.getLongExtra("activityID", 0 )
         if (primaryKey == 0L){
             primaryKey = activityManager.getNextPrimaryKey()
@@ -203,7 +210,7 @@ class ActivityEditorActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun switchToRecordEditorActivity(){
+    fun switchToRecordListActivity(){
         val intent = Intent(this, RecordListActivity::class.java)
         if (unchangedActivity != null) {
             intent.putExtra("activityID", unchangedActivity?._ID)
@@ -214,7 +221,7 @@ class ActivityEditorActivity : AppCompatActivity() {
 
     fun setUpViewRecords(){
         buttonViewRecord.setOnClickListener(){
-            switchToRecordEditorActivity()
+            switchToRecordListActivity()
         }
     }
 

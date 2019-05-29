@@ -23,7 +23,7 @@ import net.danlew.android.joda.JodaTimeAndroid
 import java.time.LocalDate
 import java.util.*
 
-class SublimePickerDialogFragment : DialogFragment() {
+class SublimePickerDateFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val recordManager = RecordManagerImpl(Realm.getDefaultInstance())
@@ -44,7 +44,7 @@ class SublimePickerDialogFragment : DialogFragment() {
                         System.currentTimeMillis(),
                         arguments!!.getLong("activityID"),
                         System.currentTimeMillis()
-                        )
+                    )
                 }else {
                     recordFromDb = recordManager.getRecord(arguments!!.getLong("recordID"))
                 }

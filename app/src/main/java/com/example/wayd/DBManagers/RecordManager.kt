@@ -11,6 +11,7 @@ interface RecordManager{
     fun addOrUpdateRecord(record: Record)
     fun getRecord(id: Long) : Record
     fun deleteRecord(record: Record)
+    fun deleteRecord(Id: Long)
     fun getAllRecords(): RealmResults<Record>
     fun deleteAllRecords()
     fun formatDate(time:Long):String

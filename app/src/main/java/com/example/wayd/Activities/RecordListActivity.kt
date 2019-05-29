@@ -5,6 +5,7 @@ import android.icu.text.AlphabeticIndex
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,7 @@ import com.example.wayd.dbmanagersImpl.RecordManagerImpl
 import com.example.wayd.dbmanagersImpl.WAYDManagerImpl
 import com.example.wayd.ui.RecyclerViewAdapterActivity
 import com.example.wayd.ui.RecyclerViewAdapterRecord
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -26,12 +28,13 @@ class RecordListActivity : AppCompatActivity() {
     private val activityManager = ActivityManagerImpl(Realm.getDefaultInstance())
     private val recordManager = RecordManagerImpl(Realm.getDefaultInstance())
     private val WAYDManager = WAYDManagerImpl(Realm.getDefaultInstance())
+    private lateinit var newRecordButton : FloatingActionButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.content_record_list)
         val activity = activityManager.getActivity(intent.getLongExtra("activityID", 0L))
-        Log.d("HERE", activity?._ID.toString())
         records.addAll(WAYDManager.getAllRecordToActivity(activity!!))
+        Log.d("Records", records.toString())
         val recyclerView:RecyclerView = findViewById(R.id.recyclerViewRecord)
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         val rvAdapter = RecyclerViewAdapterRecord(records,this)
@@ -39,6 +42,20 @@ class RecordListActivity : AppCompatActivity() {
             newActivity(record._ID, activity._ID)
         }
         recyclerView.adapter = rvAdapter
+        newRecordButton = findViewById(R.id.floatingActionButtonRecord)
+        newRecordButton.setOnClickListener {
+            val newIntent = Intent(this, RecordListActivity::class.java)
+            val recordId = recordManager.getNextPrimaryKey()
+            newIntent.putExtra("recordID", intent.getLongExtra("recordID", recordId))
+            recordManager.addOrUpdateRecord(Record(
+                recordId,
+                System.currentTimeMillis(),
+                intent.getLongExtra("activityID", 0L),
+                System.currentTimeMillis()
+            ))
+            newIntent.putExtra("activityID", intent.getLongExtra("activityID", 0L))
+            startActivity(newIntent)
+        }
 
     }
 

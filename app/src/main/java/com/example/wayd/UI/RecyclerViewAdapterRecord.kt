@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.wayd.R
+import com.example.wayd.Utils.Constants
+import com.example.wayd.Utils.Constants.Companion.HOUR_IN_MILIS
 import com.example.wayd.dbentities.Activity
 import com.example.wayd.dbentities.Record
 import com.example.wayd.dbmanagers.WAYDManager
@@ -13,7 +15,9 @@ import com.example.wayd.dbmanagersImpl.ActivityManagerImpl
 import com.example.wayd.dbmanagersImpl.RecordManagerImpl
 import com.example.wayd.dbmanagersImpl.WAYDManagerImpl
 import io.realm.Realm
+import kotlinx.android.synthetic.main.layout_listitem.view.*
 import kotlinx.android.synthetic.main.recycler_view_item_record.view.*
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.ArrayList
 
@@ -24,11 +28,13 @@ class RecyclerViewAdapterRecord(val items: ArrayList<Record>, val context: Conte
     val WAYDManager = WAYDManagerImpl(Realm.getDefaultInstance())
     val activityManager = ActivityManagerImpl(Realm.getDefaultInstance())
     override fun onBindViewHolder(holder: ViewHolderRecord, position: Int) {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-      //  holder?.timeStarted?.text = dateFormat.format(items[position].timeStarted)
-      //  holder?.endTime?.text = dateFormat.format(items[position].endTime)
-      //  holder.duration.text = recordManager.formatDate(recordManager.getTimeSpent(items[position]))
-      //  holder.value.text = WAYDManager.valueOfRecord(activityManager.getActivity(items[position].activityId)!!,items[position]).toString()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd");
+        val timeFormat = SimpleDateFormat("HH:mm:ss")
+        holder?.startDate?.text = dateFormat.format(items[position].timeStarted)
+        holder?.timeStarted?.text = timeFormat.format(items[position].timeStarted)
+        holder?.endTime?.text = timeFormat.format(items[position].endTime)
+        holder?.endDate?.text = dateFormat.format(items[position].endTime)
+        holder?.duration.text = timeFormat.format(recordManager.getTimeSpent(items[position]) - HOUR_IN_MILIS)
 
     }
 
@@ -42,12 +48,12 @@ class RecyclerViewAdapterRecord(val items: ArrayList<Record>, val context: Conte
 
 
     inner class ViewHolderRecord(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v) {
-
-       // val timeStarted = v.recordStartTimeTextView
-       // val endTime = v.recordEndTimeTextView
-       // val value = v.recordValueTextView
-       // val duration = v.recordDurationTextView
-
+        val timeStarted = v.startTimeTv
+        val endTime = v.endTimeTv
+        val duration = v.durationTv
+        val endDate = v.endDataTv
+        val startDate = v.startDateTv
+        val totalValue = v.totalValueTv
         init {
             itemView.setOnClickListener {
                 onItemClick?.invoke(items[adapterPosition])

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.graphics.drawable.DrawableCompat
 import com.example.wayd.R
+import com.example.wayd.Utils.Constants.Companion.HOUR_IN_MILIS
 import com.example.wayd.dbentities.Activity
 import com.example.wayd.dbentities.Record
 import com.example.wayd.dbmanagersImpl.ActivityManagerImpl
@@ -25,15 +26,16 @@ class RecyclerViewAdapterActivity(val items: ArrayList<Activity>, val context: C
     private val activityManager = ActivityManagerImpl(Realm.getDefaultInstance())
     private val recordManager = RecordManagerImpl(Realm.getDefaultInstance())
     private val WAYDManager = WAYDManagerImpl(Realm.getDefaultInstance())
-
     override fun onBindViewHolder(holder: ViewHolderActivity, position: Int) {
-
+        val timeFormat = SimpleDateFormat("HH:mm:ss")
         holder?.name?.text = items[position].name
-
+        holder?.valuePerHour?.amount = items[position].value.toFloat()
         holder?.iconTextView?.text = items[position].icon
         holder?.cardview?.setCardBackgroundColor(Color.parseColor("#ffffff"))
         DrawableCompat.setTint(holder?.iconTextView.getBackground(), Color.parseColor(items[position].color))
         holder?.iconTextView.setTextColor(Color.parseColor("#ffffff"))
+        holder?.totalTimeSpent.text = timeFormat.format(WAYDManager.totalTimeSpentWithActivity(items[position])-HOUR_IN_MILIS)
+        holder?.totalValue.amount = (WAYDManager.totalTimeSpentWithActivity(items[position])/1000/60/60*items[position].value).toFloat()
 
 
         //holder.time.text = WAYDManager.totalTimeSpentWithActivity(items[position]).toString()
@@ -58,14 +60,14 @@ class RecyclerViewAdapterActivity(val items: ArrayList<Activity>, val context: C
                 val dBRecord = WAYDManager.getAllRecordToActivity(items[position]._ID)?.last()
                 if (dBRecord != null) {
                     val lastRecord = Record(dBRecord._ID, dBRecord.timeStarted, dBRecord.activityId, dBRecord.endTime)
-                    val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
                     lastRecord?.endTime = System.currentTimeMillis()
                     recordManager.addOrUpdateRecord(lastRecord)
                     activity.running = false
                     holder?.cardview?.setCardBackgroundColor(Color.parseColor("#ffffff"))
                     DrawableCompat.setTint(holder?.iconTextView.getBackground(), Color.parseColor(items[position].color))
                     holder?.iconTextView.setTextColor(Color.parseColor("#ffffff"))
-
+                    holder?.totalTimeSpent.text = timeFormat.format(WAYDManager.totalTimeSpentWithActivity(items[position])-HOUR_IN_MILIS)
+                    holder?.totalValue.amount = (WAYDManager.totalTimeSpentWithActivity(items[position])/1000/60/60*items[position].value).toFloat()
                 }
 
             } else{
@@ -96,7 +98,9 @@ class RecyclerViewAdapterActivity(val items: ArrayList<Activity>, val context: C
 
     inner class ViewHolderActivity(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v) {
 
-
+        val totalTimeSpent = v.totalTimeSpenTv
+        val valuePerHour = v.valueTextView
+        val totalValue = v.totalValueTv
         val name = v.nameTextView
         //val time = v.timeTextView
        // val value = v.valueTextView
