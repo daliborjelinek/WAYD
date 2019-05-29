@@ -1,6 +1,7 @@
 package com.example.wayd.ui
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.example.wayd.dbentities.Record
 import com.example.wayd.dbmanagersImpl.ActivityManagerImpl
 import com.example.wayd.dbmanagersImpl.RecordManagerImpl
 import com.example.wayd.dbmanagersImpl.WAYDManagerImpl
+import com.example.wayd.enums.Type
 import io.realm.Realm
 import kotlinx.android.synthetic.main.layout_listitem.view.*
 import java.text.SimpleDateFormat
@@ -29,7 +31,7 @@ class RecyclerViewAdapterActivity(val items: ArrayList<Activity>, val context: C
     override fun onBindViewHolder(holder: ViewHolderActivity, position: Int) {
         val timeFormat = SimpleDateFormat("HH:mm:ss")
         holder?.name?.text = items[position].name
-        holder?.valuePerHour?.amount = items[position].value.toFloat()
+        holder?.value?.amount = items[position].value.toFloat()
         holder?.iconTextView?.text = items[position].icon
         holder?.cardview?.setCardBackgroundColor(Color.parseColor("#ffffff"))
         DrawableCompat.setTint(holder?.iconTextView.getBackground(), Color.parseColor(items[position].color))
@@ -46,6 +48,12 @@ class RecyclerViewAdapterActivity(val items: ArrayList<Activity>, val context: C
             holder?.iconTextView.setTextColor(Color.parseColor(items[position].color))
 
         }
+
+        if(items[position].type == Type.perHour.name){
+            holder?.activityTypeTextView.text = context.getString(R.string.per_hour)
+        }
+        else holder?.activityTypeTextView.text = context.getString(R.string.per_activity)
+
         holder?.iconTextView.setOnClickListener {
             val activity = Activity(
                 items[position]._ID,
@@ -100,9 +108,10 @@ class RecyclerViewAdapterActivity(val items: ArrayList<Activity>, val context: C
     inner class ViewHolderActivity(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v) {
 
         val totalTimeSpent = v.totalTimeSpenTv
-        val valuePerHour = v.valueTextView
+        val value = v.valueTextView
         val totalValue = v.totalValueTv
         val name = v.nameTextView
+        val activityTypeTextView = v.activityTypeTextView
         //val time = v.timeTextView
        // val value = v.valueTextView
         val cardview = v.listItemCardView

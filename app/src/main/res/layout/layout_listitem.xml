@@ -92,8 +92,9 @@
                 <com.example.wayd.UI.IconTextView
                         android:text="&#xf51e; / Hour"
                         android:textSize="20dp"
+                        android:fontFamily="@font/fa_solid_900"
                         android:layout_width="match_parent"
-                        android:layout_height="46dp" android:id="@+id/iconTextView4"/>
+                        android:layout_height="46dp" android:id="@+id/activityTypeTextView"/>
                 <org.fabiomsr.moneytextview.MoneyTextView
                         android:text="TextView"
                         app:symbol="€"

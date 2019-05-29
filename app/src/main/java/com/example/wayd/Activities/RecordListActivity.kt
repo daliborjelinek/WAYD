@@ -34,6 +34,8 @@ class RecordListActivity : AppCompatActivity() {
         setContentView(R.layout.content_record_list)
         val activity = activityManager.getActivity(intent.getLongExtra("activityID", 0L))
         records.addAll(WAYDManager.getAllRecordToActivity(activity!!))
+
+        records.reverse()
         Log.d("Records", records.toString())
         val recyclerView:RecyclerView = findViewById(R.id.recyclerViewRecord)
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
@@ -44,17 +46,19 @@ class RecordListActivity : AppCompatActivity() {
         recyclerView.adapter = rvAdapter
         newRecordButton = findViewById(R.id.floatingActionButtonRecord)
         newRecordButton.setOnClickListener {
-            val newIntent = Intent(this, RecordListActivity::class.java)
+         //   val newIntent = Intent(this, RecordListActivity::class.java)
             val recordId = recordManager.getNextPrimaryKey()
-            newIntent.putExtra("recordID", intent.getLongExtra("recordID", recordId))
+        //    newIntent.putExtra("recordID", intent.getLongExtra("recordID", recordId))
             recordManager.addOrUpdateRecord(Record(
                 recordId,
                 System.currentTimeMillis(),
                 intent.getLongExtra("activityID", 0L),
                 System.currentTimeMillis()
             ))
-            newIntent.putExtra("activityID", intent.getLongExtra("activityID", 0L))
-            startActivity(newIntent)
+        //    newIntent.putExtra("activityID", intent.getLongExtra("activityID", 0L))
+         //   startActivity(newIntent)
+            records.add(0, recordManager.getRecord(recordId))
+            rvAdapter.notifyDataSetChanged()
         }
 
     }

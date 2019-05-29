@@ -19,7 +19,6 @@ import com.appeaser.sublimepickerlibrary.recurrencepicker.SublimeRecurrencePicke
 import com.example.wayd.dbentities.Record
 import com.example.wayd.dbmanagersImpl.RecordManagerImpl
 import io.realm.Realm
-import net.danlew.android.joda.JodaTimeAndroid
 import java.time.LocalDate
 import java.util.*
 
