@@ -36,7 +36,6 @@ class SublimePickerDateFragment : DialogFragment() {
 
             @SuppressLint("NewApi")
             override fun onDateTimeRecurrenceSet(sublimeMaterialPicker: SublimePicker?, selectedDate: SelectedDate?, hourOfDay: Int, minute: Int, recurrenceOption: SublimeRecurrencePicker.RecurrenceOption?, recurrenceRule: String?) {
-                Log.d("Null", arguments.toString())
                 var recordFromDb : Record
                 if (arguments == null || arguments!!.getLong("recordID") == null || arguments!!.getLong("recordID") == 0L){
                     recordFromDb = Record(
@@ -48,23 +47,21 @@ class SublimePickerDateFragment : DialogFragment() {
                 }else {
                     recordFromDb = recordManager.getRecord(arguments!!.getLong("recordID"))
                 }
-                val cal = Calendar.getInstance()
-                cal.setTimeInMillis(System.currentTimeMillis())
-                cal.setTimeZone(TimeZone.getTimeZone("UTC"));
-                cal.set(Calendar.HOUR_OF_DAY, hourOfDay-2)
-                cal.set(Calendar.MINUTE, minute)
+
+
+
                 var record:Record
                 if (arguments?.getString("mode") == "end"){
                     record = Record(
                         recordFromDb._ID,
                         recordFromDb.timeStarted,
                         arguments!!.getLong("activityID"),
-                        cal.timeInMillis
+                        selectedDate!!.firstDate.timeInMillis
                     )
                 }else{
                     record = Record(
                         recordFromDb._ID,
-                        cal.timeInMillis,
+                        selectedDate!!.firstDate.timeInMillis,
                         arguments!!.getLong("activityID"),
                         recordFromDb.endTime
                     )
@@ -86,8 +83,8 @@ class SublimePickerDateFragment : DialogFragment() {
 
         var sublimePicker = SublimePicker(context)
         var sublimeOptions = SublimeOptions() // This is optional
-        sublimeOptions.setPickerToShow(SublimeOptions.Picker.TIME_PICKER) // I want the recurrence picker to show.
-        sublimeOptions.setDisplayOptions(SublimeOptions.ACTIVATE_TIME_PICKER) // I only want the recurrence picker, not the date/time pickers.
+        sublimeOptions.setPickerToShow(SublimeOptions.Picker.DATE_PICKER) // I want the recurrence picker to show.
+        sublimeOptions.setDisplayOptions(SublimeOptions.ACTIVATE_DATE_PICKER) // I only want the recurrence picker, not the date/time pickers.
         sublimePicker.initializePicker(sublimeOptions,mListener)
         return sublimePicker
     }

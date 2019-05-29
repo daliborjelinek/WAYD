@@ -35,8 +35,8 @@ class RecyclerViewAdapterActivity(val items: ArrayList<Activity>, val context: C
         DrawableCompat.setTint(holder?.iconTextView.getBackground(), Color.parseColor(items[position].color))
         holder?.iconTextView.setTextColor(Color.parseColor("#ffffff"))
         holder?.totalTimeSpent.text = timeFormat.format(WAYDManager.totalTimeSpentWithActivity(items[position])-HOUR_IN_MILIS)
-        holder?.totalValue.amount = (WAYDManager.totalTimeSpentWithActivity(items[position])/1000/60/60*items[position].value).toFloat()
-
+        //holder?.totalValue.amount = (WAYDManager.totalTimeSpentWithActivity(items[position])/1000/60/60*items[position].value).toFloat()
+        holder?.totalValue.amount = WAYDManager.valueOfActivity(items[position]).toFloat()
 
         //holder.time.text = WAYDManager.totalTimeSpentWithActivity(items[position]).toString()
         Log.d("TAG", items[position].running.toString() + items[position].name)
@@ -67,7 +67,8 @@ class RecyclerViewAdapterActivity(val items: ArrayList<Activity>, val context: C
                     DrawableCompat.setTint(holder?.iconTextView.getBackground(), Color.parseColor(items[position].color))
                     holder?.iconTextView.setTextColor(Color.parseColor("#ffffff"))
                     holder?.totalTimeSpent.text = timeFormat.format(WAYDManager.totalTimeSpentWithActivity(items[position])-HOUR_IN_MILIS)
-                    holder?.totalValue.amount = (WAYDManager.totalTimeSpentWithActivity(items[position])/1000/60/60*items[position].value).toFloat()
+                    //holder?.totalValue.amount = (WAYDManager.totalTimeSpentWithActivity(items[position])/1000/60/60*items[position].value).toFloat()
+                    holder?.totalValue.amount = WAYDManager.valueOfActivity(items[position]).toFloat()
                 }
 
             } else{

@@ -1,16 +1,12 @@
 package com.example.wayd.activities
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import android.widget.TimePicker
 import androidx.appcompat.app.AppCompatActivity
-import com.example.wayd.activities.SublimePickerDialogFragment
 import com.example.wayd.R
 import com.example.wayd.dbentities.Record
 import com.example.wayd.dbmanagersImpl.RecordManagerImpl
@@ -24,18 +20,31 @@ class RecordEditorActivity : AppCompatActivity(){
     lateinit var endTimeTv : TextView
     lateinit var buttonEditEndTime : Button
     lateinit var buttonEditStartTime : Button
+    lateinit var buttonEditEndDate : Button
+    lateinit var buttonEditStartDate : Button
+    lateinit var startDateTv : TextView
+    lateinit var endDateTv : TextView
     val recordManager = RecordManagerImpl(Realm.getDefaultInstance())
     val timeFormat = SimpleDateFormat("HH:mm")
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd");
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.record_editor)
         saveButton = findViewById(R.id.buttonSaveRecord)
         buttonEditEndTime = findViewById(R.id.buttonEditEndTime)
         buttonEditEndTime.setOnClickListener {
-            editDate("end")
+            editTime("end")
         }
         buttonEditStartTime = findViewById(R.id.buttonEditStartTime)
-        buttonEditStartTime.setOnClickListener { editDate("start") }
+        buttonEditStartTime.setOnClickListener { editTime("start") }
+        buttonEditEndDate = findViewById(R.id.buttonEditEndDate)
+        buttonEditEndDate.setOnClickListener {
+            editDate("end")
+        }
+        buttonEditStartDate = findViewById(R.id.buttonEditStartDate)
+        buttonEditStartDate.setOnClickListener {
+            editDate("start")
+        }
         saveButton.setOnClickListener{
             var primaryKey = intent.getLongExtra("recordID", 0L)
             Log.d("RecordId", intent.getLongExtra("recordID", 0L).toString())
@@ -62,6 +71,10 @@ class RecordEditorActivity : AppCompatActivity(){
             startTimeTv.text = timeFormat.format(recordManager.getRecord(intent.getLongExtra("recordID", 0L)).timeStarted)
             endTimeTv = findViewById(R.id.endTimeTvRecordEditor)
             endTimeTv.text = timeFormat.format(recordManager.getRecord(intent.getLongExtra("recordID", 0L)).endTime)
+            endDateTv = findViewById(R.id.endDateTvRecordEditor)
+            endDateTv.text = dateFormat.format(recordManager.getRecord(intent.getLongExtra("recordID", 0L)).endTime)
+            startDateTv = findViewById(R.id.startDateTvRecordEditor)
+            startDateTv.text = dateFormat.format(recordManager.getRecord(intent.getLongExtra("recordID", 0L)).timeStarted)
         }
     }
 
@@ -73,6 +86,10 @@ class RecordEditorActivity : AppCompatActivity(){
             startTimeTv.text = timeFormat.format(recordManager.getRecord(intent.getLongExtra("recordID", 0L)).timeStarted)
             endTimeTv = findViewById(R.id.endTimeTvRecordEditor)
             endTimeTv.text = timeFormat.format(recordManager.getRecord(intent.getLongExtra("recordID", 0L)).endTime)
+            endDateTv = findViewById(R.id.endDateTvRecordEditor)
+            endDateTv.text = dateFormat.format(recordManager.getRecord(intent.getLongExtra("recordID", 0L)).endTime)
+            startDateTv = findViewById(R.id.startDateTvRecordEditor)
+            startDateTv.text = dateFormat.format(recordManager.getRecord(intent.getLongExtra("recordID", 0L)).timeStarted)
         }
 
     }
@@ -90,7 +107,7 @@ class RecordEditorActivity : AppCompatActivity(){
         startActivity(newIntent)
     }
 
-    fun editDate(mode:String) {
+    fun editTime(mode:String) {
         val fragmentManager = supportFragmentManager
         var sublimePickerDialogFragment = SublimePickerDialogFragment()
         var bundle = Bundle()
@@ -102,6 +119,19 @@ class RecordEditorActivity : AppCompatActivity(){
         sublimePickerDialogFragment.arguments = bundle
         sublimePickerDialogFragment.isCancelable = false
         sublimePickerDialogFragment.show(fragmentManager,null)
+    }
+
+    fun editDate(mode:String){
+        val fragmentManager = supportFragmentManager
+        var sublimePickerDateFormat = SublimePickerDateFragment()
+        var bundle = Bundle()
+        Log.d("Sublime", intent.getLongExtra("recordID", 0L).toString())
+        bundle.putLong("recordID", intent.getLongExtra("recordID", 0L))
+        bundle.putLong("activityID", intent.getLongExtra("activityID", 0L))
+        bundle.putString("mode", mode)
+        sublimePickerDateFormat.arguments = bundle
+        sublimePickerDateFormat.isCancelable = false
+        sublimePickerDateFormat.show(fragmentManager,null)
     }
 
     fun tryDeleteRecord( v: View){

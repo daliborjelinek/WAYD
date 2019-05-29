@@ -19,12 +19,9 @@ import com.example.wayd.enums.Type
 import com.yarolegovich.lovelydialog.LovelyStandardDialog
 
 import android.widget.Spinner
-
-
-
-
-
-
+import com.example.wayd.WAYD
+import com.example.wayd.dbmanagersImpl.RecordManagerImpl
+import com.example.wayd.dbmanagersImpl.WAYDManagerImpl
 
 
 class ActivityEditorActivity : AppCompatActivity() {
@@ -41,6 +38,7 @@ class ActivityEditorActivity : AppCompatActivity() {
     private lateinit var iconTextView: IconTextView
     private var unchangedActivity: Activity? = null
     private var selectedActivityType = Type.perActivity.name
+    private val waydManager = WAYDManagerImpl(Realm.getDefaultInstance())
     companion object {
         const val TAG: String = "EditorActivity"
 
@@ -132,7 +130,7 @@ class ActivityEditorActivity : AppCompatActivity() {
             .setMessage("Do you really want to delete this activity?")
             .setPositiveButton("YES",
                 View.OnClickListener {
-                    activityManager.deleteActivity(unchangedActivity!!)
+                    waydManager.safeDeleteActivity(unchangedActivity!!)
                     switchToMainActivity()
                 })
             .setNegativeButton("NO", null)

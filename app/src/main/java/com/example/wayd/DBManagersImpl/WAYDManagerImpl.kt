@@ -22,7 +22,7 @@ class WAYDManagerImpl(val realm: Realm) : WAYDManager {
         val SEC = 60
         val MIN = 60
         val HOUR = 24
-        val TAG = "WAYD manager"
+        val TAG = "asdf"
     }
     val recordManagerImpl = RecordManagerImpl(realm)
     override fun totalTimeSpentWithActivity( activity: Activity): Long {
@@ -39,6 +39,7 @@ class WAYDManagerImpl(val realm: Realm) : WAYDManager {
     override fun getAllRecordToActivity( activity: Activity): RealmResults<Record> {
         val records = realm.where(Record::class.java).equalTo("activityId", activity._ID).findAll()
         Log.d(TAG, "Sucesfully fetched all records to activity $activity")
+        Log.d(TAG, records.size.toString())
         return records
     }
     override fun getAllRecordToActivity( activityId: Long): RealmResults<Record>? {
@@ -49,13 +50,9 @@ class WAYDManagerImpl(val realm: Realm) : WAYDManager {
 
 
 
-    override fun timeSpentWithActivityDuringTimePeriod( activity: Activity, timeperiod: Time): Long{
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun valueOfActivity( activity: Activity): Double {
         if (activity.type.equals("perHour")){
-            val value = toHours(totalTimeSpentWithActivity(activity)) * activity.value
+            val value = totalTimeSpentWithActivity(activity)/1000/60/60 * activity.value
             Log.d(TAG, "Sucesfully calculated perHour Value to $activity")
             return value
         }
@@ -64,9 +61,6 @@ class WAYDManagerImpl(val realm: Realm) : WAYDManager {
         return value
     }
 
-    override fun valueOfActivityOverTimePeriod( activity: Activity, timeperiod: Time): Number {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     override fun safeDeleteActivity(activity: Activity) {
         val records = getAllRecordToActivity(activity)

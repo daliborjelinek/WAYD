@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Test</string>
+    <string name="app_name">WAYD</string>
     <string name="title_activity_record_list">RecordListActivity</string>
 </resources>
